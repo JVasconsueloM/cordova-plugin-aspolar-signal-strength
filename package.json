@@ -1,22 +1,9 @@
 {
-    "name": "org.apache.cordova.aspolarsignalstrength",
-    "displayName": "AspolarSignalStrength",
+    "name": "cordova-signal-strength",
     "version": "1.0.0",
     "description": "A sample Apache Cordova application that responds to the deviceready event.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Aspolar <JVasconsueloM@gmail.com>",
-    "license": "MIT",
-    "dependencies": {
-        "cordova-android": "^7.0.0",
-        "cordova-plugin-whitelist": "^1.3.3"
-    },
     "cordova": {
-        "plugins": {
-            "cordova-plugin-whitelist": {}
-        },
+        "id": "cordova-plugin-aspolarsignalstrength",
         "platforms": [
             "android"
         ]
@@ -25,4 +12,13 @@
         "type": "git",
         "url": "git+https://github.com/JVasconsueloM/aspolar-signal-strength.git"
     },
+    "keywords": [
+        "signal"
+    ],
+    "author": "Aspolar",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/JVasconsueloM/aspolar-signal-strength/issues"
+    },
+    "homepage": "https://github.com/JVasconsueloM/aspolar-signal-strength"
 }
