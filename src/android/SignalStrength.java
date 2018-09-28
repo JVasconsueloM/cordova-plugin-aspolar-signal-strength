@@ -10,7 +10,7 @@ import android.telephony.CellInfoLte;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrengthWcdma;
-import android.telephony.PhoneStateListener
+import android.telephony.PhoneStateListener;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.lang.Thread
+import java.lang.Thread;
 import java.util.List;
 
 
@@ -29,10 +29,10 @@ public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        private TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        private int dBmlevel = 0;
-        private int asulevel = 0;
-        private String res = "";
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        int dBmlevel = 0;
+        int asulevel = 0;
+        String res = "";
         try {
             List<CellInfo> cellInfoList = tm.getAllCellInfo();
             //Checking if list values are not null
