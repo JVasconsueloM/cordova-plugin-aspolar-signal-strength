@@ -86,7 +86,6 @@ public class SignalStrength extends CordovaPlugin {
                 tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
                 signalLevel = -1;
             }
-            res = true;
         }
         catch (Exception ex){
 
