@@ -12,7 +12,6 @@ import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -27,6 +26,7 @@ public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
         TelephonyManager tm = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         int dBmlevel = 0;
         int asulevel = 0;
