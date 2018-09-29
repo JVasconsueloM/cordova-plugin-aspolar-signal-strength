@@ -65,7 +65,7 @@ public class SignalStrength extends CordovaPlugin {
                     }
                     else{
                         callbackContext.error("Unknown type of cell signal.");
-                        res = false;
+                        return false;
                     }
                 }
             }
@@ -90,15 +90,12 @@ public class SignalStrength extends CordovaPlugin {
         catch (Exception ex){
 
             callbackContext.error("Failed to retrieve signal strength.");
-            res = false;
-        }
-        finally{
-            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + dBmlevel + " dBm, "+ asulevel + " asu");
-            callbackContext.sendPluginResult(pluginResult);
-            res = true;
+            return false;
         }
 
-        return res;
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + dBmlevel + " dBm, "+ asulevel + " asu");
+        callbackContext.sendPluginResult(pluginResult);
+        return true;
     }
 
 } 
