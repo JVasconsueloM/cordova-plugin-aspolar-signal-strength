@@ -23,9 +23,6 @@ import org.json.JSONObject;
 import java.lang.Thread;
 import java.util.List;
 
-import com.sets.speedtest.listener.MyPhoneStateListener;
-
-
 public class SignalStrength extends CordovaPlugin {
 
     @Override
