@@ -12,7 +12,7 @@ import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
-import android.telephony.SignalStrength
+import android.telephony.SignalStrength;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -31,7 +31,7 @@ private class MyPhoneStateListener extends PhoneStateListener {
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
-            signalLevel = signalStrength.getGsmSignalStrength()
+            signalLevel = signalStrength.getGsmSignalStrength();
     }
 
 }
