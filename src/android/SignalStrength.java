@@ -24,27 +24,15 @@ import org.json.JSONObject;
 import java.lang.Thread;
 import java.util.List;
 
-
-private class MyPhoneStateListener extends PhoneStateListener {
-    int signalLevel;
-
-    @Override
-    public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-        super.onSignalStrengthsChanged(signalStrength);
-            signalLevel = signalStrength.getGsmSignalStrength();
-    }
-
-}
-
-
 public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        Context context = (Context)getApplicationContext();
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int dBmlevel = 0;
         int asulevel = 0;
+        int signalLevel = -1;
         boolean res = false;
         try {
             List<CellInfo> cellInfoList = tm.getAllCellInfo();
