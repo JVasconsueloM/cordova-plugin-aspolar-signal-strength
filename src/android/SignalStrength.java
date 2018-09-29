@@ -1,5 +1,6 @@
 package org.apache.cordova.aspolarsignalstrength;
 
+import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
@@ -19,10 +20,10 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
 import java.lang.Thread;
 import java.util.List;
+
+import com.sets.speedtest.listener.MyPhoneStateListener;
 
 
 public class SignalStrength extends CordovaPlugin {
@@ -32,7 +33,7 @@ public class SignalStrength extends CordovaPlugin {
         TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         int dBmlevel = 0;
         int asulevel = 0;
-        String res = "";
+        boolean res = false;
         try {
             List<CellInfo> cellInfoList = tm.getAllCellInfo();
             //Checking if list values are not null
@@ -73,6 +74,7 @@ public class SignalStrength extends CordovaPlugin {
                 MyPhoneStateListener MyListener = new MyPhoneStateListener();
                 tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
                 int cc = 0;
+                int signalLevel = -1;
                 while ( signalLevel == -1){
                     Thread.sleep(200);
                     if (cc++ >= 5)
@@ -92,8 +94,8 @@ public class SignalStrength extends CordovaPlugin {
             res = false;
         }
         finally{
-            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-            callbackContext.sendPluginResult(pluginResult, "Signal strength: " + dBmlevel + " dBm, "+ asulevel + " asu");
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + dBmlevel + " dBm, "+ asulevel + " asu");
+            callbackContext.sendPluginResult(pluginResult);
             res = true;
         }
 
