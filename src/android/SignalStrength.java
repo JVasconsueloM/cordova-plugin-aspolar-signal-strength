@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.lang.Thread;
 
-import java.lang.Exception
+import java.lang.Exception;
 import java.util.List;
 
 public class SignalStrength extends CordovaPlugin {
