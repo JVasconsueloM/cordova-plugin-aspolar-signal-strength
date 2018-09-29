@@ -9,8 +9,6 @@ import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 
-import com.sets.speedtest.utils.CheckPhoneStatus;
-
 /**
  * @author : lipan
  * @create_time : 2014年11月12日 下午4:44:22

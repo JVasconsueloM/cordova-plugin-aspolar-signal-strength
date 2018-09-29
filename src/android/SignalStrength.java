@@ -27,7 +27,8 @@ public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        Context context = this;
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int dBmlevel = 0;
         int asulevel = 0;
         boolean res = false;
