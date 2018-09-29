@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.lang.Thread;
+import java.lang.Exception
 import java.util.List;
 
 public class SignalStrength extends CordovaPlugin {
@@ -86,7 +87,7 @@ public class SignalStrength extends CordovaPlugin {
             }
             res = true;
         }
-        catch (JSONException ex){
+        catch (Exception ex){
             callbackContext.error("Failed to retrieve signal strength.");
             res = false;
         }
