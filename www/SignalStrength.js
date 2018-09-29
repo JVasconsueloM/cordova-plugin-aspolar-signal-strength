@@ -2,7 +2,13 @@ function SignalStrength() {
 }
 
 SignalStrength.prototype.get = function (successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback);
+  cordova.exec(
+  	successCallback, 
+  	errorCallback,
+  	'SignalStrength',  // Java Class
+  	'get', // action
+     [{}]
+  	);
 };
 
 SignalStrength.install = function () {

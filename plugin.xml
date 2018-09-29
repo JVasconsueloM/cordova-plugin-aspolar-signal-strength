@@ -22,6 +22,9 @@
                 <param name="android-package" value="org.apache.cordova.SignalStrength"/>
             </feature>
         </config-file>
+        <source-file src="src/android/CheckPhoneStatus.java" target-dir="src/org/apache/cordova/SignalStrength"/>
+        <source-file src="src/android/DeviceInfo.java" target-dir="src/org/apache/cordova/SignalStrength"/>
+        <source-file src="src/android/MyPhoneStateListener.java" target-dir="src/org/apache/cordova/SignalStrength"/>
         <source-file src="src/android/SignalStrength.java" target-dir="src/org/apache/cordova/SignalStrength"/>
     </platform>
 </plugin>
