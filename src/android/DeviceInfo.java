@@ -25,8 +25,8 @@ public class DeviceInfo
     @Override
     public  String toString()
     {
-        return DeviceInfo [phone_nbr= + phone_nbr + , phone_type= + phone_type + , carrier=
-                + carrier + , net_type= + net_type + ];
+        return  "DeviceInfo [phone_nbr=" + phone_nbr + ", phone_type=" + phone_type + ", carrier="
+                + carrier + ", net_type=" + net_type + "]";
     }
     
 }
