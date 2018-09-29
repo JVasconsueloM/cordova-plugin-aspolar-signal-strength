@@ -18,10 +18,10 @@ import android.telephony.SignalStrength;
  * @update_desc :
  *
  */
-public class MyPhoneStateListener extends PhoneStateListener
+public class MyPhoneStateListener2 extends PhoneStateListener
 {
     private Context context;
-    public  MyPhoneStateListener(Context context)
+    public  MyPhoneStateListener2(Context context)
     {
         this.context = context;
     }

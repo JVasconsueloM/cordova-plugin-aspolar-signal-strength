@@ -12,6 +12,7 @@ import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -23,12 +24,25 @@ import org.json.JSONObject;
 import java.lang.Thread;
 import java.util.List;
 
+
+private class MyPhoneStateListener extends PhoneStateListener {
+    int signalLevel;
+
+    @Override
+    public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+        super.onSignalStrengthsChanged(signalStrength);
+            signalLevel = signalStrength.getGsmSignalStrength()
+    }
+
+}
+
+
 public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Context context = this;
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         int dBmlevel = 0;
         int asulevel = 0;
         boolean res = false;
@@ -72,7 +86,6 @@ public class SignalStrength extends CordovaPlugin {
                 MyPhoneStateListener MyListener = new MyPhoneStateListener();
                 tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
                 int cc = 0;
-                int signalLevel = -1;
                 while ( signalLevel == -1){
                     Thread.sleep(200);
                     if (cc++ >= 5)
