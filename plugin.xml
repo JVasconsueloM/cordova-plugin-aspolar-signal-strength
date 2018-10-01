@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-aspolar-plugin-signal-strength" version="0.7.1"
+<plugin id="cordova-aspolar-plugin-signal-strength" version="1.0.0"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -12,7 +12,7 @@
     <asset src="www/SignalStrength.js" target="js/SignalStrength.js"/>
 
     <js-module name="SignalStrength" src="www/SignalStrength.js">
-        <clobbers target="window.plugins.SignalStrength"/>
+        <clobbers target="window.plugins.signalStrength"/>
     </js-module>
 
     <!-- android -->
@@ -25,7 +25,6 @@
             </feature>
         </config-file>
 
-        <!-- <source-file src="src/com/aspolar/plugin/MyPhoneStateListener.java" target-dir="src/com/aspolar/plugin"/> -->
         <source-file src="src/android/SignalStrength.java" target-dir="src/com/aspolar/plugin/SignalStrength"/>
     </platform>
 </plugin>

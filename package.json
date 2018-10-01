@@ -1,5 +1,5 @@
 {
-  "name": "cordova-plugin-signal-strength",
+  "name": "cordova-aspolar-plugin-signal-strength",
   "version": "0.1.0",
   "description": "A sample for a new cordova plugin",
   "cordova": {
