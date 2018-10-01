@@ -36,10 +36,10 @@ import org.json.JSONObject;
 
 
 public class SignalStrength extends CordovaPlugin {
-    int dBmlevel = 0;
-    int asulevel = 0;
-    int signalLevel = -1;
-    TelephonyManager tm;
+    // int dBmlevel = 0;
+    // int asulevel = 0;
+    // int signalLevel = -1;
+    // TelephonyManager tm;
 
     private static final String DURATION_LONG = "long";
 
