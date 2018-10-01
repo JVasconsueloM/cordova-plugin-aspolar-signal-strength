@@ -113,7 +113,7 @@ public class SignalStrength extends CordovaPlugin {
         @Override
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             super.onSignalStrengthsChanged(SignalStrength);
-            int signalLevel = signalStrength.getGsmSignalStrength();
+            signalLevel = signalStrength.getGsmSignalStrength();
         }
 
     }
