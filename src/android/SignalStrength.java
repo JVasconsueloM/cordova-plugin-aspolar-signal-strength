@@ -25,77 +25,82 @@ import java.lang.Exception;
 import java.util.List;
 
 public class SignalStrength extends CordovaPlugin {
+    int dBmlevel = 0;
+    int asulevel = 0;
+    int signalLevel = -1;
+    TelephonyManager tm;
+
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("getInfo")) {
+            this.tm = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
-        TelephonyManager tm = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        int dBmlevel = 0;
-        int asulevel = 0;
-        int signalLevel = -1;
-        boolean res = false;
-        try {
-            List<CellInfo> cellInfoList = tm.getAllCellInfo();
-            //Checking if list values are not null
-            if (cellInfoList != null) {
-                for (final CellInfo info : cellInfoList) {
-                    if (info instanceof CellInfoGsm) {
-                        //GSM Network
-                        CellSignalStrengthGsm cellSignalStrength = ((CellInfoGsm)info).getCellSignalStrength();
-                        dBmlevel = cellSignalStrength.getDbm();
-                        asulevel = cellSignalStrength.getAsuLevel();
-                    }
-                    else if (info instanceof CellInfoCdma) {
-                        //CDMA Network
-                        CellSignalStrengthCdma cellSignalStrength = ((CellInfoCdma)info).getCellSignalStrength();
-                        dBmlevel = cellSignalStrength.getDbm();
-                        asulevel = cellSignalStrength.getAsuLevel();
-                    }
-                    else if (info instanceof CellInfoLte) {
-                        //LTE Network
-                        CellSignalStrengthLte cellSignalStrength = ((CellInfoLte)info).getCellSignalStrength();
-                        dBmlevel = cellSignalStrength.getDbm();
-                        asulevel = cellSignalStrength.getAsuLevel();
-                    }
-                    else if  (info instanceof CellInfoWcdma) {
-                        //WCDMA Network
-                        CellSignalStrengthWcdma cellSignalStrength = ((CellInfoWcdma)info).getCellSignalStrength();
-                        dBmlevel = cellSignalStrength.getDbm();
-                        asulevel = cellSignalStrength.getAsuLevel();
-                    }
-                    else{
-                        callbackContext.error("Unknown type of cell signal.");
-                        return false;
+            try {
+                List<CellInfo> cellInfoList = tm.getAllCellInfo();
+                //Checking if list values are not null
+                if (cellInfoList != null) {
+                    for (final CellInfo info : cellInfoList) {
+                        if (info instanceof CellInfoGsm) {
+                            //GSM Network
+                            CellSignalStrengthGsm cellSignalStrength = ((CellInfoGsm)info).getCellSignalStrength();
+                            this.dBmlevel = cellSignalStrength.getDbm();
+                            this.asulevel = cellSignalStrength.getAsuLevel();
+                        }
+                        else if (info instanceof CellInfoCdma) {
+                            //CDMA Network
+                            CellSignalStrengthCdma cellSignalStrength = ((CellInfoCdma)info).getCellSignalStrength();
+                            this.dBmlevel = cellSignalStrength.getDbm();
+                            this.asulevel = cellSignalStrength.getAsuLevel();
+                        }
+                        else if (info instanceof CellInfoLte) {
+                            //LTE Network
+                            CellSignalStrengthLte cellSignalStrength = ((CellInfoLte)info).getCellSignalStrength();
+                            this.dBmlevel = cellSignalStrength.getDbm();
+                            this.asulevel = cellSignalStrength.getAsuLevel();
+                        }
+                        else if  (info instanceof CellInfoWcdma) {
+                            //WCDMA Network
+                            CellSignalStrengthWcdma cellSignalStrength = ((CellInfoWcdma)info).getCellSignalStrength();
+                            this.dBmlevel = cellSignalStrength.getDbm();
+                            this.asulevel = cellSignalStrength.getAsuLevel();
+                        }
+                        else{
+                            callbackContext.error("Unknown type of cell signal.");
+                            return false;
+                        }
                     }
                 }
-            }
-            else{
-                //Mostly for Samsung devices, after checking if the list is indeed empty.
-                MyPhoneStateListener MyListener = new MyPhoneStateListener();
-                tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-                int cc = 0;
-                while ( signalLevel == -1){
-                    Thread.sleep(200);
-                    if (cc++ >= 5)
-                    {
-                        break;
+                else{
+                    //Mostly for Samsung devices, after checking if the list is indeed empty.
+                    MyPhoneStateListener MyListener = new MyPhoneStateListener();
+                    this.tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                    int cc = 0;
+                    while ( this.signalLevel == -1){
+                        Thread.sleep(200);
+                        if (cc++ >= 5)
+                        {
+                            break;
+                        }
                     }
+                    this.asulevel = this.signalLevel;
+                    this.dBmlevel = -113 + 2 * this.asulevel;
+                    this.tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
+                    this.signalLevel = -1;
                 }
-                asulevel = signalLevel;
-                dBmlevel = -113 + 2 * asulevel;
-                tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
-                signalLevel = -1;
             }
-        }
-        catch (Exception ex){
+            catch (Exception ex){
+                callbackContext.error("Failed to retrieve signal strength.");
+                return false;
+            }
 
-            callbackContext.error("Failed to retrieve signal strength.");
-            return false;
+            // PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu");
+            // callbackContext.sendPluginResult(pluginResult);
+            callbackContext.success("Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu");
+            return true;
         }
 
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + dBmlevel + " dBm, "+ asulevel + " asu");
-        callbackContext.sendPluginResult(pluginResult);
-        return true;
+        callbackContext.error("Action not found.");
+        return false      
     }
-
 } 

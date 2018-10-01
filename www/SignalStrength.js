@@ -1,14 +1,13 @@
+var exec = require('cordova/exec');
+var cordova = require('cordova');
+var channel = require('cordova/channel');
+var utils = require('cordova/utils');
+
 function SignalStrength() {
 }
 
-SignalStrength.prototype.get = function (successCallback, errorCallback) {
-  cordova.exec(
-  	successCallback, 
-  	errorCallback,
-  	'SignalStrength',  // Java Class
-  	'get', // action
-     [{}]
-  	);
+SignalStrength.prototype.getInfo = function (successCallback, errorCallback) {
+  exec(successCallback, errorCallback, 'SignalStrength', 'getInfo', []);
 };
 
 SignalStrength.install = function () {
