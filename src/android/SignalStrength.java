@@ -1,5 +1,5 @@
-package org.apache.cordova.aspolarsignalstrength;
-/* 
+package com.aspolar.plugin;
+ 
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.telephony.CellInfo;
@@ -23,31 +23,23 @@ import java.lang.Thread;
 
 import java.lang.Exception;
 import java.util.List;
-*/
+import android.util.Log;
 
-import android.widget.Toast;
-// Cordova-required packages
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.PluginResult;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 
 public class SignalStrength extends CordovaPlugin {
-    // int dBmlevel = 0;
-    // int asulevel = 0;
-    // int signalLevel = -1;
-    // TelephonyManager tm;
-
-    private static final String DURATION_LONG = "long";
+    int dBmlevel = 0;
+    int asulevel = 0;
+    int signalLevel = -1;
+    TelephonyManager tm;
 
     @Override
-    public boolean execute(final String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        Log.v(action);
+        Log.v(!action.equals("getInfo"));
 
-        /* if (!action.equals("getInfo")) {
-            callbackContext.error("\"" + action + "\" is not a recognized action.");
+        if (!action.equals("getInfo")) {
             return false;
         }
 
@@ -83,7 +75,8 @@ public class SignalStrength extends CordovaPlugin {
                         this.asulevel = cellSignalStrength.getAsuLevel();
                     }
                     else{
-                        callbackContext.error("Unknown type of cell signal.");
+                        // callbackContext.error("Unknown type of cell signal.");
+                        Log.v("Unknown type of cell signal.");
                         return false;
                     }
                 }
@@ -107,38 +100,14 @@ public class SignalStrength extends CordovaPlugin {
             }
         }
         catch (Exception ex){
-            callbackContext.error("Failed to retrieve signal strength.");
+            // callbackContext.error("Failed to retrieve signal strength.");
+            Log.v("Failed to retrieve signal strength.");
             return false;
         }
 
-        // PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu");
-        // callbackContext.sendPluginResult(pluginResult);
-        callbackContext.success("Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu");
+        String message = "Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu";
+        callbackContext.success(message);
         return true;
-        */
-        if (!action.equals("show")) {
-        callbackContext.error("\"" + action + "\" is not a recognized action.");
-        return false;
-      }
-      String message;
-      String duration;
-      try {
-        JSONObject options = args.getJSONObject(0);
-        message = options.getString("message");
-        duration = options.getString("duration");
-      } catch (JSONException e) {
-        callbackContext.error("Error encountered: " + e.getMessage());
-        return false;
-      }
-      // Create the toast
-      Toast toast = Toast.makeText(cordova.getActivity(), message,
-        DURATION_LONG.equals(duration) ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-      // Display toast
-      toast.show();
-      // Send a positive result to the callbackContext
-      PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-      callbackContext.sendPluginResult(pluginResult);
-      return true;
         
     }
 } 

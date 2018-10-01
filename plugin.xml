@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-aspolarsignalstrength" version="0.0.1"
+<plugin id="com.aspolar.plugin.signal.strength" version="0.7.1"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>Aspolar Signal Strength</name>
-    <description>An Android Cordova plugin to get Signal Strength.</description>
-    <license>MIT</license>
-    <keywords>cordova,android,signal,strength</keywords>
-    <repo>https://github.com/JVasconsueloM/aspolar-signal-strength.git</repo>
-    <issue>https://github.com/JVasconsueloM/aspolar-signal-strength/issues</issue>
+    <name>Signal Strength</name>
+
+
     <engines>
-        <engine name="cordova" version=">=3.0.0"/>
+        <engine name="cordova" version=">=3.4.0"/>
     </engines>
+    
+    <asset src="www/SignalStrength.js" target="js/SignalStrength.js"/>
+
     <js-module name="SignalStrength" src="www/SignalStrength.js">
         <clobbers target="window.plugins.signalStrength"/>
     </js-module>
 
     <!-- android -->
     <platform name="android">
+
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="SignalStrength">
-                <param name="android-package" value="org.apache.cordova.SignalStrength"/>
+                <param name="android-package" value="com.aspolar.plugin.SignalStrength"/>
             </feature>
         </config-file>
-        <source-file src="src/android/MyPhoneStateListener.java" target-dir="src/org/apache/cordova/SignalStrength"/>
-        <source-file src="src/android/SignalStrength.java" target-dir="src/org/apache/cordova/SignalStrength"/>
+
+        <source-file src="src/android/MyPhoneStateListener.java" target-dir="src/com/aspolar/plugin"/>
+        <source-file src="src/android/SignalStrength.java" target-dir="src/com/aspolar/plugin"/>
     </platform>
 </plugin>
