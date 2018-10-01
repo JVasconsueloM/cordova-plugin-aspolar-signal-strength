@@ -36,8 +36,8 @@ public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        Log.v(action);
-        Log.v(!action.equals("getInfo"));
+        Log.i("tag", action);
+        Log.i("tag", !action.equals("getInfo"));
 
         if (!action.equals("getInfo")) {
             return false;
@@ -76,7 +76,7 @@ public class SignalStrength extends CordovaPlugin {
                     }
                     else{
                         // callbackContext.error("Unknown type of cell signal.");
-                        Log.v("Unknown type of cell signal.");
+                        Log.i("tag", "Unknown type of cell signal.");
                         return false;
                     }
                 }
@@ -101,7 +101,7 @@ public class SignalStrength extends CordovaPlugin {
         }
         catch (Exception ex){
             // callbackContext.error("Failed to retrieve signal strength.");
-            Log.v("Failed to retrieve signal strength.");
+            Log.i("tag", "Failed to retrieve signal strength.");
             return false;
         }
 
