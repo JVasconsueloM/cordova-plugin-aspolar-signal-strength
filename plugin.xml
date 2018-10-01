@@ -25,6 +25,6 @@
         </config-file>
 
         <source-file src="src/android/MyPhoneStateListener.java" target-dir="src/com/aspolar/plugin"/>
-        <source-file src="src/android/SignalStrength.java" target-dir="src/com/aspolar/plugin"/>
+        <!-- <source-file src="src/android/SignalStrength.java" target-dir="src/com/aspolar/plugin"/> -->
     </platform>
 </plugin>
