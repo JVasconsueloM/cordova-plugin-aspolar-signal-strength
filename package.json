@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A sample for a new cordova plugin",
   "cordova": {
-    "id": "cordova-plugin-signal-strength",
+    "id": "cordova-aspolar-plugin-signal-strength",
     "platforms": [
       "android"
     ]
