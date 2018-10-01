@@ -99,8 +99,7 @@ public class SignalStrength extends CordovaPlugin {
             callbackContext.success("Signal strength: " + this.dBmlevel + " dBm, "+ this.asulevel + " asu");
             return true;
         }
-
         callbackContext.error("Action not found.");
-        return false      
+        return false;
     }
 } 
