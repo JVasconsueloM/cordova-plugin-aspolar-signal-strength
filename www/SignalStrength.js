@@ -11,9 +11,9 @@ SignalStrength.install = function () {
     window.plugins = {};
   }
 
-  window.plugins.signalStrength = new SignalStrength();
+  window.plugins.SignalStrength = new SignalStrength();
 
-  return window.plugins.signalStrength;
+  return window.plugins.SignalStrength;
 };
 
 cordova.addConstructor(SignalStrength.install);
