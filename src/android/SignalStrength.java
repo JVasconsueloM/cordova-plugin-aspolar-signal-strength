@@ -37,7 +37,8 @@ public class SignalStrength extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         Log.i("tag", action);
-        Log.i("tag", !action.equals("getInfo"));
+        
+        Log.i("tag", !action.equals("getInfo") + "");
 
         if (!action.equals("getInfo")) {
             return false;
