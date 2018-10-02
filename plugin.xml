@@ -28,6 +28,9 @@
                 <param name="android-package" value="com.aspolar.plugin.SignalStrength"/>
                 <param name="onload" value="true" />
             </feature>
+
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
         </config-file>
 
         <source-file src="src/android/SignalStrength.java" target-dir="src/com/aspolar/plugin/SignalStrength"/>
