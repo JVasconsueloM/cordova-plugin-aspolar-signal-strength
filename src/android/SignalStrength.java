@@ -24,8 +24,6 @@ import org.json.JSONObject;
 import java.lang.Exception;
 import java.lang.Thread;
 import java.util.List;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 
 public class SignalStrength extends CordovaPlugin {
@@ -98,7 +96,7 @@ public class SignalStrength extends CordovaPlugin {
         }
         catch (Exception ex){
             // callbackContext.error("Failed to retrieve signal strength.");
-            Log.i("tag", "Failed to retrieve signal strength.", toString(ex));
+            Log.i("tag", "Failed to retrieve signal strength.", ex);
             return false;
         }
 
@@ -117,13 +115,6 @@ public class SignalStrength extends CordovaPlugin {
             signalLevel = signalStrength.getGsmSignalStrength();
         }
 
-    }
-
-    public String toString(Throwable th) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        th.printStackTrace(pw);
-        return sw.toString();
     }
 } 
 
