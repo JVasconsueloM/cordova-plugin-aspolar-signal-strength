@@ -11,7 +11,6 @@ import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
-import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -25,6 +24,8 @@ import org.json.JSONObject;
 import java.lang.Exception;
 import java.lang.Thread;
 import java.util.List;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 
 public class SignalStrength extends CordovaPlugin {
@@ -97,7 +98,7 @@ public class SignalStrength extends CordovaPlugin {
         }
         catch (Exception ex){
             // callbackContext.error("Failed to retrieve signal strength.");
-            Log.i("tag", "Failed to retrieve signal strength.", ex + "");
+            Log.i("tag", "Failed to retrieve signal strength.", toString(ex));
             return false;
         }
 
@@ -111,11 +112,18 @@ public class SignalStrength extends CordovaPlugin {
     public class MyPhoneStateListener extends PhoneStateListener {
 
         @Override
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            super.onSignalStrengthsChanged(SignalStrength);
+        public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
+            super.onSignalStrengthsChanged(signalStrength);
             signalLevel = signalStrength.getGsmSignalStrength();
         }
 
+    }
+
+    public String toString(Throwable th) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        th.printStackTrace(pw);
+        return sw.toString();
     }
 } 
 
