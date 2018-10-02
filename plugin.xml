@@ -4,6 +4,11 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>Signal Strength</name>
+    <description>An Android Cordova plugin to get Signal Strength.</description>
+    <license>MIT</license>
+    <keywords>cordova,android,signal,strength</keywords>
+    <repo>https://github.com/JVasconsueloM/aspolar-signal-strength.git</repo>
+    <issue>https://github.com/JVasconsueloM/aspolar-signal-strength/issues</issue>
 
     <engines>
         <engine name="cordova" version=">=3.0.0"/>
