@@ -32,7 +32,7 @@ import java.util.List;
 
 
 public class SignalStrength extends CordovaPlugin {
-    private int networkType;
+    private String networkType;
     protected final static String[] permissions = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION };
     public double signalpercentage = 0.0;
     public int asulevel = 0;
@@ -43,13 +43,16 @@ public class SignalStrength extends CordovaPlugin {
     public static final int PERMISSION_DENIED_ERROR = 20;
     public String message = "";
     public TelephonyManager tm;
+    public CallbackContext callbackContext;
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+
         if (!action.equals("getbBm") && !action.equals("getPercentage")) {
             return false;
         }
 
+        this.callbackContext = callbackContext;
         tm = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
         try {
@@ -63,7 +66,7 @@ public class SignalStrength extends CordovaPlugin {
 
         }
         catch (Exception ex){
-            callbackContext.error("Failed to retrieve signal strength. (" + ex + ")");
+            this.callbackContext.error("Failed to retrieve signal strength. (" + ex + ")");
             Log.i("tag", "Failed to retrieve signal strength.", ex);
             return false;
         }
@@ -71,19 +74,18 @@ public class SignalStrength extends CordovaPlugin {
         message = dBmlevel  + "";
 
         if (action.equals("getPercentage")) {
-            this.networkType = args.getInt(1);
+            this.networkType = args.getString(0);
             this.getPercentage(networkType);
         }
 
 
-        callbackContext.success(message);
+        this.callbackContext.success(message);
         return true;
         
     }
 
 
     public class MyPhoneStateListener extends PhoneStateListener {
-
         @Override
         public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
             super.onSignalStrengthsChanged(signalStrength);
@@ -142,7 +144,7 @@ public class SignalStrength extends CordovaPlugin {
     }
 
 
-    public void processInfo(CallbackContext callbackContext){
+    public void processInfo(){
         List<CellInfo> cellInfoList = tm.getAllCellInfo();
         //Checking if list values are not null
         if (cellInfoList != null) {
@@ -176,7 +178,7 @@ public class SignalStrength extends CordovaPlugin {
                     asulevelmax = 31;
                 }
                 else{
-                    callbackContext.error("Unknown type of cell signal.");
+                    this.callbackContext.error("Unknown type of cell signal.");
                     Log.i("tag", "Unknown type of cell signal.");
                 }
             }
