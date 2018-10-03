@@ -185,20 +185,24 @@ public class SignalStrength extends CordovaPlugin {
         }
         else{
             //Mostly for Samsung devices, after checking if the list is indeed empty.
-            MyPhoneStateListener MyListener = new MyPhoneStateListener();
-            tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-            int cc = 0;
-            while ( signalLevel == -1){
-                Thread.sleep(200);
-                if (cc++ >= 5)
-                {
-                    break;
+            try { 
+                MyPhoneStateListener MyListener = new MyPhoneStateListener();
+                tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+                int cc = 0;
+                while ( signalLevel == -1){
+                    Thread.sleep(200);
+                    if (cc++ >= 5)
+                    {
+                        break;
+                    }
                 }
+                asulevel = signalLevel;
+                dBmlevel = -113 + 2 * asulevel;
+                tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
+                signalLevel = -1;
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e + "");
             }
-            asulevel = signalLevel;
-            dBmlevel = -113 + 2 * asulevel;
-            tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
-            signalLevel = -1;
         }
     }
 
