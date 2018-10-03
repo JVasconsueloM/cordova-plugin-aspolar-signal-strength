@@ -1,6 +1,9 @@
 package com.aspolar.plugin;
  
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.PackageManager;
+import android.Manifest;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
@@ -13,22 +16,16 @@ import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.PluginResult;
-import org.apache.cordova.PermissionHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.Exception;
 import java.lang.Thread;
 import java.util.List;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PermissionHelper;
+import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class SignalStrength extends CordovaPlugin {
@@ -118,7 +115,15 @@ public class SignalStrength extends CordovaPlugin {
     public void getPercentage(String networkType){
         switch (networkType) {
             case "wifi":
-                signalpercentage = (2.0 * (dBmlevel + 100))/100;
+                if (dBmlevel <= -100){
+                    signalpercentage =  0;
+                }
+                else if (dBmlevel >= -50){
+                    signalpercentage =  1;
+                }
+                else{
+                    signalpercentage = (2.0 * (dBmlevel + 100))/100;
+                }
                 break;
             default:
                 signalpercentage = asulevel/asulevelmax * 1.0;
