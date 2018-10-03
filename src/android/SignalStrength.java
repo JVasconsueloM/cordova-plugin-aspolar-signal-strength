@@ -125,7 +125,7 @@ public class SignalStrength extends CordovaPlugin {
                 break;
         }
         message = signalpercentage + "";
-        Log.i("tag", message);
+        Log.i("tag", message, "networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
 
 
@@ -197,6 +197,7 @@ public class SignalStrength extends CordovaPlugin {
                     }
                 }
                 asulevel = signalLevel;
+                asulevelmax = 31;
                 dBmlevel = -113 + 2 * asulevel;
                 tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
                 signalLevel = -1;

@@ -3,14 +3,14 @@ var argscheck = require('cordova/argscheck');
 
 function SignalStrength() {}
 
-SignalStrength.prototype.getbBm = function (successCallback, errorCallback) {
-  	exec(successCallback, errorCallback, 'SignalStrength', 'getbBm', []);
+SignalStrength.prototype.getdBm = function (successCallback, errorCallback) {
+  	exec(successCallback, errorCallback, 'SignalStrength', 'getdBm', []);
 };
 
 SignalStrength.prototype.getPercentage = function (successCallback, errorCallback, options) {
 	options = options || {};
     var getValue = argscheck.getValue;
-    var typeNetwork = getValue(options.typeNetwork, 'wifi');
+    var typeNetwork = getValue(options.typeNetwork, 'notWifi');
 	args = [typeNetwork];
   	exec(successCallback, errorCallback, 'SignalStrength', 'getPercentage', args);
 };
