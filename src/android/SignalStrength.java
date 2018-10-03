@@ -13,6 +13,10 @@ import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -28,16 +32,17 @@ import java.util.List;
 
 
 public class SignalStrength extends CordovaPlugin {
-    int asulevel = 0;
-    int asulevelmax = 31;
-    int dBmlevel = 0;
-    int signalLevel = -1;
-    String message = "";
-    double signalpercentage = 0.0;
-    TelephonyManager tm;
-
-    public static final int CONTINUE = 1;
+    private int networkType;
     protected final static String[] permissions = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION };
+    public double signalpercentage = 0.0;
+    public int asulevel = 0;
+    public int asulevelmax = 31;
+    public int dBmlevel = 0;
+    public int signalLevel = -1;
+    public static final int CONTINUE = 1;
+    public static final int PERMISSION_DENIED_ERROR = 20;
+    public String message = "";
+    public TelephonyManager tm;
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -66,7 +71,8 @@ public class SignalStrength extends CordovaPlugin {
         message = dBmlevel  + "";
 
         if (action.equals("getPercentage")) {
-            this.getPercentage();
+            this.networkType = args.getInt(1);
+            this.getPercentage(networkType);
         }
 
 
@@ -118,26 +124,25 @@ public class SignalStrength extends CordovaPlugin {
         }
         message = signalpercentage + "";
         Log.i("tag", message);
-
     }
 
 
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
         for (int r : grantResults) {
             if (r == PackageManager.PERMISSION_DENIED) {
-                this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "PERMISSION_DENIED_ERROR"));
+                this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
                 return;
             }
         }
         switch (requestCode) {
             case CONTINUE:
-                this.processInfo(this.srcType, this.destType, this.encodingType);
+                this.processInfo();
                 break;
         }
     }
 
 
-    public void processInfo(){
+    public void processInfo(CallbackContext callbackContext){
         List<CellInfo> cellInfoList = tm.getAllCellInfo();
         //Checking if list values are not null
         if (cellInfoList != null) {
@@ -173,7 +178,6 @@ public class SignalStrength extends CordovaPlugin {
                 else{
                     callbackContext.error("Unknown type of cell signal.");
                     Log.i("tag", "Unknown type of cell signal.");
-                    return false;
                 }
             }
         }
