@@ -109,7 +109,7 @@ public class SignalStrength extends CordovaPlugin {
     */
     public void getPercentage(String networkType){
         switch (networkType) {
-            case 'wifi':
+            case "wifi":
                 signalpercentage = (2.0 * (dBmlevel + 100))/100;
                 break;
             default:
