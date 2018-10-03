@@ -30,17 +30,18 @@ import org.json.JSONObject;
 
 public class SignalStrength extends CordovaPlugin {
     private String networkType;
-    protected final static String[] permissions = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION };
     public double signalpercentage = 0.0;
     public int asulevel = 0;
     public int asulevelmax = 31;
     public int dBmlevel = 0;
     public int signalLevel = -1;
-    public static final int CONTINUE = 1;
-    public static final int PERMISSION_DENIED_ERROR = 20;
     public String message = "";
     public TelephonyManager tm;
     public CallbackContext callbackContext;
+
+    protected final static String[] permissions = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION };
+    public static final int CONTINUE = 1;
+    public static final int PERMISSION_DENIED_ERROR = 20;
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -60,7 +61,6 @@ public class SignalStrength extends CordovaPlugin {
             else{
                 this.processInfo();
             }
-
         }
         catch (Exception ex){
             this.callbackContext.error("Failed to retrieve signal strength. (" + ex + ")");
@@ -75,12 +75,13 @@ public class SignalStrength extends CordovaPlugin {
             this.getPercentage(networkType);
         }
 
-
         this.callbackContext.success(message);
         return true;
-        
     }
 
+    //----------------
+    // Local Class
+    //----------------
 
     public class MyPhoneStateListener extends PhoneStateListener {
         @Override
@@ -90,11 +91,13 @@ public class SignalStrength extends CordovaPlugin {
         }
     }
 
-    //--------------------------------------------------------------------------
-    // LOCAL METHODS
-    //--------------------------------------------------------------------------
+    //----------------
+    // Local Methods
+    //----------------
 
-    /**         MIN     MAX 
+    // SIGNAL STRENGHT INFO
+    /* **********************
+                 MIN     MAX 
     CDMA (2g)   
         dBm =   -100    -75
         asu =   1       16
@@ -111,7 +114,7 @@ public class SignalStrength extends CordovaPlugin {
     LINEAR =        100 * (1 - (((-dBmmax) - (-dBmlevel))/((-dBmmax) - (-dBmmin))));
     NOT LINEAR =    (2.0 * (dBmlevel + 100))/100
 
-    */
+    ********************* */
     public void getPercentage(String networkType){
         switch (networkType) {
             case "wifi":
@@ -130,9 +133,8 @@ public class SignalStrength extends CordovaPlugin {
                 break;
         }
         message = signalpercentage + "";
-        Log.i("tag", message, "networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
+        Log.i("tag", message + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
-
 
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
         for (int r : grantResults) {
@@ -208,9 +210,14 @@ public class SignalStrength extends CordovaPlugin {
                 signalLevel = -1;
             } catch (Exception e) {
                 throw new IllegalArgumentException(e + "");
+                Log.i("tag", "Unknown type of cell signal.", e);
             }
         }
     }
 
 } 
+
+
+
+
 
