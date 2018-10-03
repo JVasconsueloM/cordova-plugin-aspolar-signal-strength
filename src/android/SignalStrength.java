@@ -185,8 +185,7 @@ public class SignalStrength extends CordovaPlugin {
                     asulevelmax = 31;
                 }
                 else{
-                    this.callbackContext.error("Unknown type of cell signal.");
-                    Log.i("tag", "Unknown type of cell signal.");
+                    throw new IllegalArgumentException("Unknown type of cell signal.");
                 }
             }
         }
@@ -209,8 +208,7 @@ public class SignalStrength extends CordovaPlugin {
                 tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
                 signalLevel = -1;
             } catch (Exception e) {
-                throw new IllegalArgumentException(e + "");
-                Log.i("tag", "Unknown type of cell signal.", e);
+                throw new IllegalArgumentException(e);
             }
         }
     }
