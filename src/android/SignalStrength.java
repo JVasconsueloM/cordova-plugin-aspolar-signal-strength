@@ -46,7 +46,7 @@ public class SignalStrength extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
-        if (!action.equals("getbBm") && !action.equals("getPercentage")) {
+        if (!action.equals("getdBm") && !action.equals("getPercentage")) {
             return false;
         }
 
@@ -89,8 +89,7 @@ public class SignalStrength extends CordovaPlugin {
             super.onSignalStrengthsChanged(signalStrength);
             signalLevel = signalStrength.getGsmSignalStrength();
         }
-    }
-
+ 
     //----------------
     // Local Methods
     //----------------
