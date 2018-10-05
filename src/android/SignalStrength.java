@@ -89,7 +89,7 @@ public class SignalStrength extends CordovaPlugin {
             super.onSignalStrengthsChanged(signalStrength);
             signalLevel = signalStrength.getGsmSignalStrength();
         }
-    }
+    
     //----------------
     // Local Methods
     //----------------
@@ -131,7 +131,7 @@ public class SignalStrength extends CordovaPlugin {
                 signalpercentage = asulevel/asulevelmax * 1.0;
                 break;
         }
-        message = signalpercentage + "";
+        message = signalpercentage + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax;
         Log.i("tag", message + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
 
@@ -161,6 +161,11 @@ public class SignalStrength extends CordovaPlugin {
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
                     asulevelmax = 31;
+                    Log.v("tag", "CellSignalStrengthGsm   "); // Verbose
+                    Log.d("tag","CellSignalStrengthGsm   "); // Debug
+                    Log.i("tag","CellSignalStrengthGsm   "); // Info
+                    Log.w("tag","CellSignalStrengthGsm   "); // Warning
+                    Log.e("tag","CellSignalStrengthGsm   "); // Error
                 }
                 else if (info instanceof CellInfoCdma) {
                     //CDMA Network
@@ -168,6 +173,11 @@ public class SignalStrength extends CordovaPlugin {
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
                     asulevelmax = 16;
+                    Log.v("tag", "CellSignalStrengthCdma   "); // Verbose
+                    Log.d("tag","CellSignalStrengthCdma   "); // Debug
+                    Log.i("tag","CellSignalStrengthCdma   "); // Info
+                    Log.w("tag","CellSignalStrengthCdma   "); // Warning
+                    Log.e("tag","CellSignalStrengthCdma   "); // Error
                 }
                 else if (info instanceof CellInfoLte) {
                     //LTE Network
@@ -175,6 +185,11 @@ public class SignalStrength extends CordovaPlugin {
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
                     asulevelmax = 97;
+                    Log.v("tag", "CellSignalStrengthLte   "); // Verbose
+                    Log.d("tag","CellSignalStrengthLte   "); // Debug
+                    Log.i("tag","CellSignalStrengthLte   "); // Info
+                    Log.w("tag","CellSignalStrengthLte   "); // Warning
+                    Log.e("tag","CellSignalStrengthLte   "); // Error
                 }
                 else if  (info instanceof CellInfoWcdma) {
                     //WCDMA Network
@@ -182,6 +197,11 @@ public class SignalStrength extends CordovaPlugin {
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
                     asulevelmax = 31;
+                    Log.v("tag", "CellSignalStrengthWcdma   "); // Verbose
+                    Log.d("tag","CellSignalStrengthWcdma   "); // Debug
+                    Log.i("tag","CellSignalStrengthWcdma   "); // Info
+                    Log.w("tag","CellSignalStrengthWcdma   "); // Warning
+                    Log.e("tag","CellSignalStrengthWcdma   "); // Error
                 }
                 else{
                     throw new IllegalArgumentException("Unknown type of cell signal.");
