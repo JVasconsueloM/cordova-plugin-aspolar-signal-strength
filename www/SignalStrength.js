@@ -8,11 +8,10 @@ SignalStrength.prototype.getdBm = function (successCallback, errorCallback) {
 };
 
 SignalStrength.prototype.getPercentage = function (successCallback, errorCallback, options) {
-	options = options || {};
-    var getValue = argscheck.getValue;
-    var typeNetwork = getValue(options.typeNetwork, 'notWifi');
-	args = [typeNetwork];
-  	exec(successCallback, errorCallback, 'SignalStrength', 'getPercentage', args);
+  	options = options || {};
+    var typeNetwork = options.typeNetwork || 'notWifi';
+  	args = [typeNetwork];
+    exec(successCallback, errorCallback, 'SignalStrength', 'getPercentage', args);
 };
 
 SignalStrength.install = function () {
