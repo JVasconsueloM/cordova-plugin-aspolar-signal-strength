@@ -89,7 +89,7 @@ public class SignalStrength extends CordovaPlugin {
             super.onSignalStrengthsChanged(signalStrength);
             signalLevel = signalStrength.getGsmSignalStrength();
         }
-    
+    } 
     //----------------
     // Local Methods
     //----------------
