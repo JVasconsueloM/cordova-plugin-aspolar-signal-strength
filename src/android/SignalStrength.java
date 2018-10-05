@@ -30,7 +30,6 @@ import org.json.JSONObject;
 
 public class SignalStrength extends CordovaPlugin {
     private String networkType;
-    public double signalpercentage = 0.0;
     public int asulevel = 0;
     public int asulevelmax = 31;
     public int dBmlevel = 0;
@@ -117,20 +116,20 @@ public class SignalStrength extends CordovaPlugin {
     public void getPercentage(String networkType){
         if(networkType == "wifi"){
             if (dBmlevel <= -100){
-                signalpercentage =  0;
+                message =  String.format( "%.2f", 0 );
             }
             else if (dBmlevel >= -50){
-                signalpercentage =  1;
+                message =  String.format( "%.2f", 1 );
             }
             else{
-                signalpercentage = (2.0 * (dBmlevel + 100))/100;
+                message = String.format( "%.2f", (2.0 * (dBmlevel + 100))/100 );
             }
         }
         else {
-            signalpercentage = asulevel/asulevelmax * 1.0;
+            message = String.format( "%.2f",  1.0 * asulevel / asulevelmax);
         }
 
-        message = signalpercentage + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax;
+        message += "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax;
         Log.i("tag", message + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
 
