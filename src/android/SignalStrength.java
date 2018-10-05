@@ -30,10 +30,10 @@ import org.json.JSONObject;
 
 public class SignalStrength extends CordovaPlugin {
     private String networkType;
-    public int asulevel = 0;
+    public int asulevel = -1;
     public int asulevelmax = 31;
     public int dBmlevel = 0;
-    public int signalLevel = -1;
+    public String signalLevel;
     public String message = "";
     public TelephonyManager tm;
     public CallbackContext callbackContext;
@@ -86,7 +86,7 @@ public class SignalStrength extends CordovaPlugin {
         @Override
         public void onSignalStrengthsChanged(android.telephony.SignalStrength signalStrength) {
             super.onSignalStrengthsChanged(signalStrength);
-            signalLevel = signalStrength.getGsmSignalStrength();
+            asulevel = signalStrength.getGsmSignalStrength();
         }
     } 
     //----------------
@@ -117,7 +117,7 @@ public class SignalStrength extends CordovaPlugin {
         if(networkType == "wifi"){
             if (dBmlevel <= -100){
                 message =  String.format( "%.2f", 0 );
-            }
+        
             else if (dBmlevel >= -50){
                 message =  String.format( "%.2f", 1 );
             }
@@ -129,7 +129,7 @@ public class SignalStrength extends CordovaPlugin {
             message = String.format( "%.2f",  1.0 * asulevel / asulevelmax);
         }
 
-        message += "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax;
+        message += "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax + "signalLevel: " + signalLevel;
         Log.i("tag", message + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
 
@@ -158,6 +158,7 @@ public class SignalStrength extends CordovaPlugin {
                     CellSignalStrengthGsm cellSignalStrength = ((CellInfoGsm)info).getCellSignalStrength();
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
+                    signalLevel =  cellSignalStrength.getLevel() + "";
                     asulevelmax = 31;
                 }
                 else if (info instanceof CellInfoCdma) {
@@ -165,13 +166,15 @@ public class SignalStrength extends CordovaPlugin {
                     CellSignalStrengthCdma cellSignalStrength = ((CellInfoCdma)info).getCellSignalStrength();
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
-                    asulevelmax = 16;
+                    signalLevel =  cellSignalStrength.getLevel() + "";
+                    asulevelmax = 97;
                 }
                 else if (info instanceof CellInfoLte) {
                     //LTE Network
                     CellSignalStrengthLte cellSignalStrength = ((CellInfoLte)info).getCellSignalStrength();
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
+                    signalLevel =  cellSignalStrength.getLevel() + "";
                     asulevelmax = 97;
                 }
                 else if  (info instanceof CellInfoWcdma) {
@@ -179,6 +182,7 @@ public class SignalStrength extends CordovaPlugin {
                     CellSignalStrengthWcdma cellSignalStrength = ((CellInfoWcdma)info).getCellSignalStrength();
                     dBmlevel = cellSignalStrength.getDbm();
                     asulevel = cellSignalStrength.getAsuLevel();
+                    signalLevel =  cellSignalStrength.getLevel() + "";
                     asulevelmax = 31;
                 }
                 else{
@@ -192,18 +196,17 @@ public class SignalStrength extends CordovaPlugin {
                 MyPhoneStateListener MyListener = new MyPhoneStateListener();
                 tm.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
                 int cc = 0;
-                while ( signalLevel == -1){
+                while ( asulevel == -1){
                     Thread.sleep(200);
                     if (cc++ >= 5)
                     {
                         break;
                     }
                 }
-                asulevel = signalLevel;
                 asulevelmax = 31;
                 dBmlevel = -113 + 2 * asulevel;
                 tm.listen(MyListener, PhoneStateListener.LISTEN_NONE);
-                signalLevel = -1;
+                signalLevel = String.format("%.0g%n", 1.0*asulevel/asulevelmax*4);
             } catch (Exception e) {
                 throw new IllegalArgumentException(e);
             }
