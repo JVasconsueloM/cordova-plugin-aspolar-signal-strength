@@ -15,7 +15,6 @@ import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import java.lang.Exception;
 import java.lang.Thread;
 import java.util.List;
@@ -34,7 +33,7 @@ public class SignalStrength extends CordovaPlugin {
     public int asulevelmax = 31;
     public int dBmlevel = 0;
     public String signalLevel;
-    public String message = "";
+    public String result = "";
     public TelephonyManager tm;
     public CallbackContext callbackContext;
 
@@ -44,8 +43,11 @@ public class SignalStrength extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        boolean isGetdBm = action.equals("getdBm");
+        boolean isGetPercentage = action.equals("getdBm");
+        boolean isGetLevel = action.equals("getLevel");
 
-        if (!action.equals("getdBm") && !action.equals("getPercentage")) {
+        if (!isGetdBm && !isGetPercentage && !isGetLevel) {
             return false;
         }
 
@@ -63,18 +65,22 @@ public class SignalStrength extends CordovaPlugin {
         }
         catch (Exception ex){
             this.callbackContext.error("Failed to retrieve signal strength. (" + ex + ")");
-            Log.i("tag", "Failed to retrieve signal strength.", ex);
             return false;
         }
 
-        message = dBmlevel  + "";
 
-        if (action.equals("getPercentage")) {
+        if (isGetPercentage) {
             this.networkType = args.getString(0);
             this.getPercentage(networkType);
         }
+        else if (isGetLevel){
+            result = signalLevel;
+        }
+        else {
+            result = dBmlevel  + "";
+        }
 
-        this.callbackContext.success(message);
+        this.callbackContext.success(result);
         return true;
     }
 
@@ -116,21 +122,18 @@ public class SignalStrength extends CordovaPlugin {
     public void getPercentage(String networkType){
         if(networkType == "wifi"){
             if (dBmlevel <= -100){
-                message =  String.format( "%.2f", 0 );
+                result =  String.format( "%.2f", 0 );
             }
             else if (dBmlevel >= -50){
-                message =  String.format( "%.2f", 1 );
+                result =  String.format( "%.2f", 1 );
             }
             else{
-                message = String.format( "%.2f", (2.0 * (dBmlevel + 100))/100 );
+                result = String.format( "%.2f", (2.0 * (dBmlevel + 100))/100 );
             }
         }
         else {
-            message = String.format( "%.2f",  1.0 * asulevel / asulevelmax);
+            result = String.format( "%.2f",  1.0 * asulevel / asulevelmax);
         }
-
-        message += "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax + "signalLevel: " + signalLevel;
-        Log.i("tag", message + "   networkType: " + networkType + ", asulevel: " + asulevel + ", asulevelmax:" + asulevelmax);
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
