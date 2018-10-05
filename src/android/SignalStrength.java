@@ -117,7 +117,7 @@ public class SignalStrength extends CordovaPlugin {
         if(networkType == "wifi"){
             if (dBmlevel <= -100){
                 message =  String.format( "%.2f", 0 );
-        
+            }
             else if (dBmlevel >= -50){
                 message =  String.format( "%.2f", 1 );
             }
@@ -213,9 +213,4 @@ public class SignalStrength extends CordovaPlugin {
         }
     }
 
-} 
-
-
-
-
-
+}
