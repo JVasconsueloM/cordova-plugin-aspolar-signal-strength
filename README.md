@@ -1,4 +1,8 @@
-## for use this plugin with Ionic 3
+#### Cordova plugin signal strength - ionic 2~3 ... min android API 17
+### Supported platforms
+   - Android
+
+
 ### Installation
 1. Install the Cordova plugin:
     > cordova plugin add https://github.com/JVasconsueloM/aspolar-signal-strength.git
