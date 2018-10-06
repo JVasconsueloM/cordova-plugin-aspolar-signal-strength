@@ -1,95 +1,94 @@
 ## for use this plugin with Ionic 3
 ### Installation
-Install the Cordova plugin:
-> cordova plugin add https://github.com/JVasconsueloM/aspolar-signal-strength.git
+1. Install the Cordova plugin:
+    > cordova plugin add https://github.com/JVasconsueloM/aspolar-signal-strength.git
 
-Build the ionic wrapper
+2. Build the ionic wrapper
+    Open terminal and write:
+    > ionic generate provider signal-strength
 
-Open terminal and write:
-> ionic generate provider signal-strength
+    Then copy and paste this on file created.
 
-Then copy and paste this on file created.
+    ```typescript
+    import { Injectable } from '@angular/core';
+    import { Cordova, Plugin, IonicNativePlugin } from "@ionic-native/core";
 
-```typescript
-import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from "@ionic-native/core";
+    /*
+      Generated class for the SignalStengthProvider provider.
 
-/*
-  Generated class for the SignalStengthProvider provider.
+      See https://angular.io/guide/dependency-injection for more info on providers
+      and Angular DI.
+    */
+    @Plugin({
+      pluginName: 'SignalStrength',
+      plugin: 'cordova-aspolar-plugin-signal-strength',
+      pluginRef: 'window.plugins.signalStrength',
+      repo: 'https://github.com/JVasconsueloM/aspolar-signal-strength',
+      platforms: ['Android']
+    })
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-@Plugin({
-  pluginName: 'SignalStrength',
-  plugin: 'cordova-aspolar-plugin-signal-strength',
-  pluginRef: 'window.plugins.signalStrength',
-  repo: 'https://github.com/JVasconsueloM/aspolar-signal-strength',
-  platforms: ['Android']
-})
+    @Injectable()
+    export class SignalStrengthProvider extends IonicNativePlugin  {
 
-@Injectable()
-export class SignalStrengthProvider extends IonicNativePlugin  {
+      @Cordova()
+      getdBm(): Promise<any> {
+        return; // We add return; here to avoid any IDE / Compiler errors
+      }
 
-  @Cordova()
-  getdBm(): Promise<any> {
-    return; // We add return; here to avoid any IDE / Compiler errors
-  }
-  
-  @Cordova()
-  getPercentage(): Promise<any> {
-    return; // We add return; here to avoid any IDE / Compiler errors
-  }
-  
-  @Cordova()
-  getLevel(): Promise<any> {
-    return; // We add return; here to avoid any IDE / Compiler errors
-  }
-}
+      @Cordova()
+      getPercentage(): Promise<any> {
+        return; // We add return; here to avoid any IDE / Compiler errors
+      }
 
-```
-Add the plugin to Your App's Module
-```typescript
-...
+      @Cordova()
+      getLevel(): Promise<any> {
+        return; // We add return; here to avoid any IDE / Compiler errors
+      }
+    }
 
-import { SignalStrengthProvider } from "../providers/signal-strength/signal-strength";
-
-...
-
-@NgModule({
-  ...
-
-  providers: [
+    ```
+3. Add the plugin to Your App's Module
+    ```typescript
     ...
-    SignalStrengthProvider
+
+    import { SignalStrengthProvider } from "../providers/signal-strength/signal-strength";
+
     ...
-  ]
-  ...
-})
-export class AppModule { }
 
-```
+    @NgModule({
+      ...
 
-for use... 
-```typescript
-...
-import { SignalStrengthProvider } from "../providers/signal-strength/signal-strength";
-...
+      providers: [
+        ...
+        SignalStrengthProvider
+        ...
+      ]
+      ...
+    })
+    export class AppModule { }
 
-export class HomePage{
-  ...
-  constructor(public navCtrl: NavController, private signal: SignalStrengthProvider) {}
-  ...
-  
-  getSignal() {
-    this.signal.getInfo().then((result) => {
-      alert(result);
-    }, (err) => {
-      alert(JSON.stringify(err));
-    });
-  }
+    ```
 
-}
+4. for use... 
+    ```typescript
+    ...
+    import { SignalStrengthProvider } from "../providers/signal-strength/signal-strength";
+    ...
+
+    export class HomePage{
+      ...
+      constructor(public navCtrl: NavController, private signalStrength: SignalStrengthProvider) {}
+      ...
+      getSignal() {
+        this.signalStrength.getInfo().then((result) => {
+          alert(result);
+        }, (err) => {
+          alert(JSON.stringify(err));
+        });
+      }
+      ...
+    }
+    ```
 
 
 
