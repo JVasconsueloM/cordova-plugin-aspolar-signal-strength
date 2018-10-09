@@ -84,7 +84,7 @@
       constructor(public navCtrl: NavController, private signalStrength: SignalStrengthProvider) {}
       ...
       getSignal() {
-        this.signalStrength.getInfo().then((result) => {
+        this.signalStrength.getdBm().then((result) => {
           alert(result);
         }, (err) => {
           alert(JSON.stringify(err));
